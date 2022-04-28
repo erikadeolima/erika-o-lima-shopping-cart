@@ -19,8 +19,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  const itemAddBtn = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  section.appendChild(itemAddBtn);
+  itemAddBtn.addEventListener('click', putOnCart);
   return section;
 }
 
@@ -29,7 +30,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -38,6 +39,14 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+async function putOnCart(event) {
+  const myItem = await fetchItem(event.target.parentNode.firstChild.innerText);
+  const { id, title, price } = myItem;
+  const myItemOBject = { sku: id, name: title, salePrice: price };
+  const myItemToBuy = createCartItemElement(myItemOBject);
+  document.querySelector('.cart__items').appendChild(myItemToBuy);
 }
 
 async function principal() {
