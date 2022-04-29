@@ -27,12 +27,13 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
+/* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
+} */
 
 function cartItemClickListener(event) {
  event.target.remove();
+ saveCartItems(qSCartItems.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -49,7 +50,7 @@ async function putOnCart(event) {
   const myItemOBject = { sku: id, name: title, salePrice: price };
   const myItemToBuy = createCartItemElement(myItemOBject);
   qSCartItems.appendChild(myItemToBuy);
-  saveCartItems(myItemToBuy.innerHTML);
+  saveCartItems(qSCartItems.innerHTML);
 }
 
 async function principal() {
@@ -61,13 +62,27 @@ async function principal() {
     mySectionList.appendChild(minhaLista);
   });
 }
-
+/* Requisito 4 - getSavedCartItems */
 function getLocal() {
-  const itemLocal = getSavedCartItems('items');
+  const itemLocal = getSavedCartItems('cartItems');
   qSCartItems.innerHTML = itemLocal;
+  for (let i = 0; i < qSCartItems.children.length; i += 1) {
+    const ideia = qSCartItems.children[i];
+    ideia.addEventListener('click', cartItemClickListener);
+  }
 }
 
+/* async function sumMyCartItems() {
+  let sum;
+  const myShop = await fetchProducts('computador');
+  if (myShop !== Number) {
+    return 'Subtotal: R$';
+  }
+  return myShop;
+}
+document.querySelector('.total-price').innerText = sumMyCartItems(); */
+
 window.onload = () => {
-  principal();
   getLocal();
+  principal();
 };
