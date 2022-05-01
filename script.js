@@ -52,7 +52,7 @@ function putOnCart(event) {
 
 function emptyCart() {
   qSCartItems.innerHTML = '';
-  qSTotalPrice.innerText = '';
+  qSTotalPrice.innerText = 'Subtotal: $ 0 ';
   localStorage.clear();
 }
 
