@@ -19,7 +19,7 @@ function updateTotal(price) {
   const totalItens = parseFloat(localStorage.getItem('totalItens') || 0) 
   + parseFloat(price);
   localStorage.setItem('totalItens', totalItens.toFixed(2));
-  qSTotalPrice.innerText = `Subtotal: $${totalItens.toFixed(2)}`;
+  qSTotalPrice.innerText = `${totalItens}`;
 }
 
 function cartItemClickListener(event) {
@@ -101,7 +101,7 @@ function getLocal() {
     ideia.addEventListener('click', cartItemClickListener);
   }
   const totalItens = (localStorage.getItem('totalItens') || 0);
-  qSTotalPrice.innerText = `Subtotal: $${totalItens}`;
+  qSTotalPrice.innerText = `${totalItens}`;
 }
 
 window.onload = () => {
